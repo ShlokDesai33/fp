@@ -2,9 +2,6 @@
 // instead of `...args` to avoid creating a new array gives us a small
 // performance gain
 
-// biome-ignore-all lint/complexity/useArrowFunction: the arguments object
-// cannot be used in arrow functions - the `function` keyword must be used.
-
 /**
  * Curries a binary function, enabling both partial application and direct
  * invocation.
@@ -124,17 +121,17 @@ export function curry<A, B, C, R>(
  */
 export function curry(fn: (...args: unknown[]) => unknown) {
 	if (fn.length === 2) {
-		return function (a: unknown, b: unknown) {
+		return function $curry(a: unknown, b: unknown) {
 			return arguments.length >= 2 ? fn(a, b) : (b: unknown) => fn(a, b);
 		};
 	}
 
 	if (fn.length === 3) {
-		return function (a: unknown, b: unknown, c: unknown) {
+		return function $curry(a: unknown, b: unknown, c: unknown) {
 			if (arguments.length >= 3) return fn(a, b, c);
 			if (arguments.length === 2) return (c: unknown) => fn(a, b, c);
 
-			return function (b: unknown, c: unknown) {
+			return function $$curry(b: unknown, c: unknown) {
 				return arguments.length >= 2
 					? fn(a, b, c)
 					: (c: unknown) => fn(a, b, c);
