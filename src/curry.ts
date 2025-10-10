@@ -139,5 +139,6 @@ export function curry(fn: (...args: unknown[]) => unknown) {
 		};
 	}
 
+	// TODO: replace with a `panic`
 	throw new Error(`Unsupported arity: ${fn.length}`);
 }
