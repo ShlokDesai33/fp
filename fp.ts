@@ -2,6 +2,9 @@
 // instead of `...args` to avoid creating a new array gives us a small
 // performance gain
 
+// biome-ignore-all lint/complexity/useArrowFunction: the arguments object
+// cannot be used in arrow functions - the `function` keyword must be used.
+
 /**
  * Curries a binary function, enabling both partial application and direct
  * invocation.
@@ -22,39 +25,22 @@
  *  - `curried(a)` - Partial application, returns `(b: B) => R`
  *
  * @example
- * // Basic usage with direct call
+ * // basic usage via direct call
  * const add = (a: number, b: number) => a + b;
  * const curriedAdd = curry(add);
  * curriedAdd(5, 10); // 15
  *
  * @example
- * // Curried style - partial application
+ * // curried style via partial application
  * const add = (a: number, b: number) => a + b;
  * const curriedAdd = curry(add);
  * const add5 = curriedAdd(5);
  * add5(10); // 15
- * add5(20); // 25
- *
- * @example
- * // Building specialized functions
- * const multiply = (a: number, b: number) => a * b;
- * const curriedMultiply = curry(multiply);
- * const double = curriedMultiply(2);
- * const triple = curriedMultiply(3);
- * [1, 2, 3].map(double); // [2, 4, 6]
- *
- * @example
- * // Function composition
- * const append = (suffix: string, text: string) => text + suffix;
- * const curriedAppend = curry(append);
- * const addExclamation = curriedAppend('!');
- * ['Hello', 'World'].map(addExclamation); // ['Hello!', 'World!']
  *
  * @remarks
- * It supports calling with extra arguments (they will be ignored) and handles
- * falsy values correctly.
- *
- * @throws an Error if the function arity is not exactly 2
+ * 	- Does not support rest parameters or optional parameters
+ * 	- All parameters must be required for proper currying behavior
+ * 	- Function.length must accurately reflect the parameter count
  */
 export function curry<A, B, R>(
 	fn: (a: A, b: B) => R,
@@ -84,76 +70,32 @@ export function curry<A, B, R>(
  *  - `curried(a, b, c)` - Direct call, returns `R`
  *  - `curried(a, b)` - Partial application, returns `(c: C) => R`
  *  - `curried(a)` - Partial application, returns:
- *    - `(b, c)` - Provide both remaining arguments, returns `R`
- *    - `(b)` - Provide only second argument, returns `(c: C) => R`
+ *    - `(b, c)` - Direct call, returns `R`
+ *    - `(b)` - Partial application, returns `(c: C) => R`
  *
  * @example
- * // Direct call with all arguments
+ * // direct call with all arguments
  * const sum3 = (a: number, b: number, c: number) => a + b + c;
  * const curriedSum = curry(sum3);
  * curriedSum(1, 2, 3); // 6
  *
  * @example
- * // Fully curried style
+ * // fully curried style
  * const sum3 = (a: number, b: number, c: number) => a + b + c;
  * const curriedSum = curry(sum3);
  * curriedSum(1)(2)(3); // 6
  *
  * @example
- * // Mixed style - two then one
+ * // mixed style
  * const sum3 = (a: number, b: number, c: number) => a + b + c;
  * const curriedSum = curry(sum3);
  * curriedSum(1, 2)(3); // 6
- *
- * @example
- * // Mixed style - one then two
- * const sum3 = (a: number, b: number, c: number) => a + b + c;
- * const curriedSum = curry(sum3);
  * curriedSum(1)(2, 3); // 6
  *
- * @example
- * // Building configuration pipelines
- * const fetch3 = (method: string, url: string, data: unknown) =>
- *   fetch(url, { method, body: JSON.stringify(data) });
- * const curriedFetch = curry(fetch3);
- * const postAPI = curriedFetch('POST')('/api');
- * postAPI({ name: 'Alice' }); // POST to /api
- * postAPI({ name: 'Bob' });   // POST to /api
- *
- * @example
- * // Progressive specialization
- * const clamp = (min: number, max: number, value: number) =>
- *   Math.max(min, Math.min(max, value));
- * const curriedClamp = curry(clamp);
- * const clamp0to100 = curriedClamp(0, 100);
- * clamp0to100(150); // 100
- * clamp0to100(-50); // 0
- *
- * @example
- * // Event handler factories
- * const handleEvent = (type: string, id: string, event: Event) =>
- *   console.log(`${type} on ${id}:`, event);
- * const curriedHandle = curry(handleEvent);
- * button.addEventListener('click', curriedHandle('CLICK', 'btn-1'));
- *
- * @example
- * // Data transformation with partial application
- * const replace = (search: string, replacement: string, text: string) =>
- *   text.replace(new RegExp(search, 'g'), replacement);
- * const curriedReplace = curry(replace);
- * const removeSpaces = curriedReplace(' ', '');
- * const texts = ['hello world', 'foo bar'];
- * texts.map(removeSpaces); // ['helloworld', 'foobar']
- *
  * @remarks
- * - Correctly handles falsy values in any argument position
- * - Extra arguments beyond the declared arity are ignored
- * - Type-safe inference for all calling patterns
- * - Only supports functions with exactly 3 parameters (arity = 3)
- * - Does not support rest parameters or default parameters
- * - Function.length must accurately reflect the parameter count
- *
- * @throws an Error if the function arity is not exactly 3
+ * 	- Does not support rest parameters or optional parameters
+ * 	- All parameters must be required for proper currying behavior
+ * 	- Function.length must accurately reflect the parameter count
  */
 export function curry<A, B, C, R>(
 	fn: (a: A, b: B, c: C) => R,
@@ -179,28 +121,20 @@ export function curry<A, B, C, R>(
  *  - Returns a new function awaiting remaining arguments
  *
  * @throws an Error if the function arity is not 2 or 3.
- *
- * @remarks
- * - Uses direct function invocation instead of `.call()` (1-3% faster)
- * - Caches `arguments.length` in arity-3 branch (1-2% faster)
- * - Correctly processes falsy values in any position
- * - Gracefully handles extra arguments beyond declared arity
- * - Maintains type safety through overload signatures
- * - The `arguments` object is used instead of `...args` for perf reasons
  */
 export function curry(fn: (...args: unknown[]) => unknown) {
 	if (fn.length === 2) {
-		return (a: unknown, b?: unknown) => {
+		return function (a: unknown, b: unknown) {
 			return arguments.length >= 2 ? fn(a, b) : (b: unknown) => fn(a, b);
 		};
 	}
 
 	if (fn.length === 3) {
-		return (a: unknown, b?: unknown, c?: unknown): unknown => {
+		return function (a: unknown, b: unknown, c: unknown) {
 			if (arguments.length >= 3) return fn(a, b, c);
 			if (arguments.length === 2) return (c: unknown) => fn(a, b, c);
 
-			return (b: unknown, c?: unknown) => {
+			return function (b: unknown, c: unknown) {
 				return arguments.length >= 2
 					? fn(a, b, c)
 					: (c: unknown) => fn(a, b, c);
