@@ -5,14 +5,14 @@
 	"scripts": {
 		"typecheck": "tsc --noEmit"
 	},
+	"dependencies": {
+		"fp-ts": "^2.16.11"
+	},
 	"devDependencies": {
 		"@biomejs/biome": "2.2.5",
 		"@types/bun": "latest"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
-	},
-	"dependencies": {
-		"fp-ts": "^2.16.11"
 	}
 }

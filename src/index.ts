@@ -1,6 +1,8 @@
-import { curry } from "./curry";
+import { pipeAsync } from './pipe';
 
-const match = curry((regexp: RegExp, s: string) => s.match(regexp));
-const matchA = match(/a/g, "An Apple a Day Keeps the Doctor Away");
-
-console.log(matchA);
+const _fetchAndProcess = pipeAsync(
+	(id: number) => fetch(`/api/users/${id}`),
+	(response) => response.json(),
+	async (_user) => ({ processed: true }),
+	(test) => test,
+);
