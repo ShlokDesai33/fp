@@ -133,93 +133,93 @@ export function pipe(...fns: Array<(...args: unknown[]) => unknown>) {
 
 // 2 functions
 export function pipeAsync<A extends unknown[], B, C>(
-	fn1: (...args: A) => B | Promise<B>,
-	fn2: (b: B) => C | Promise<C>,
-): (...args: A) => Promise<C>;
+	fn1: (...args: A) => B,
+	fn2: (b: Awaited<B>) => C,
+): (...args: A) => Promise<Awaited<C>>;
 
 // 3 functions
 export function pipeAsync<A extends unknown[], B, C, D>(
-	fn1: (...args: A) => B | Promise<B>,
-	fn2: (b: B) => C | Promise<C>,
-	fn3: (c: C) => D | Promise<D>,
-): (...args: A) => Promise<D>;
+	fn1: (...args: A) => B,
+	fn2: (b: Awaited<B>) => C,
+	fn3: (c: Awaited<C>) => D,
+): (...args: A) => Promise<Awaited<D>>;
 
 // 4 functions
 export function pipeAsync<A extends unknown[], B, C, D, E>(
-	fn1: (...args: A) => B | Promise<B>,
-	fn2: (b: B) => C | Promise<C>,
-	fn3: (c: C) => D | Promise<D>,
-	fn4: (d: D) => E | Promise<E>,
-): (...args: A) => Promise<E>;
+	fn1: (...args: A) => B,
+	fn2: (b: Awaited<B>) => C,
+	fn3: (c: Awaited<C>) => D,
+	fn4: (d: Awaited<D>) => E,
+): (...args: A) => Promise<Awaited<E>>;
 
 // 5 functions
 export function pipeAsync<A extends unknown[], B, C, D, E, F>(
-	fn1: (...args: A) => B | Promise<B>,
-	fn2: (b: B) => C | Promise<C>,
-	fn3: (c: C) => D | Promise<D>,
-	fn4: (d: D) => E | Promise<E>,
-	fn5: (e: E) => F | Promise<F>,
-): (...args: A) => Promise<F>;
+	fn1: (...args: A) => B,
+	fn2: (b: Awaited<B>) => C,
+	fn3: (c: Awaited<C>) => D,
+	fn4: (d: Awaited<D>) => E,
+	fn5: (e: Awaited<E>) => F,
+): (...args: A) => Promise<Awaited<F>>;
 
 // 6 functions
 export function pipeAsync<A extends unknown[], B, C, D, E, F, G>(
-	fn1: (...args: A) => B | Promise<B>,
-	fn2: (b: B) => C | Promise<C>,
-	fn3: (c: C) => D | Promise<D>,
-	fn4: (d: D) => E | Promise<E>,
-	fn5: (e: E) => F | Promise<F>,
-	fn6: (f: F) => G | Promise<G>,
-): (...args: A) => Promise<G>;
+	fn1: (...args: A) => B,
+	fn2: (b: Awaited<B>) => C,
+	fn3: (c: Awaited<C>) => D,
+	fn4: (d: Awaited<D>) => E,
+	fn5: (e: Awaited<E>) => F,
+	fn6: (f: Awaited<F>) => G,
+): (...args: A) => Promise<Awaited<G>>;
 
 // 7 functions
 export function pipeAsync<A extends unknown[], B, C, D, E, F, G, H>(
-	fn1: (...args: A) => B | Promise<B>,
-	fn2: (b: B) => C | Promise<C>,
-	fn3: (c: C) => D | Promise<D>,
-	fn4: (d: D) => E | Promise<E>,
-	fn5: (e: E) => F | Promise<F>,
-	fn6: (f: F) => G | Promise<G>,
-	fn7: (g: G) => H | Promise<H>,
-): (...args: A) => Promise<H>;
+	fn1: (...args: A) => B,
+	fn2: (b: Awaited<B>) => C,
+	fn3: (c: Awaited<C>) => D,
+	fn4: (d: Awaited<D>) => E,
+	fn5: (e: Awaited<E>) => F,
+	fn6: (f: Awaited<F>) => G,
+	fn7: (g: Awaited<G>) => H,
+): (...args: A) => Promise<Awaited<H>>;
 
 // 8 functions
 export function pipeAsync<A extends unknown[], B, C, D, E, F, G, H, I>(
-	fn1: (...args: A) => B | Promise<B>,
-	fn2: (b: B) => C | Promise<C>,
-	fn3: (c: C) => D | Promise<D>,
-	fn4: (d: D) => E | Promise<E>,
-	fn5: (e: E) => F | Promise<F>,
-	fn6: (f: F) => G | Promise<G>,
-	fn7: (g: G) => H | Promise<H>,
-	fn8: (h: H) => I | Promise<I>,
-): (...args: A) => Promise<I>;
+	fn1: (...args: A) => B,
+	fn2: (b: Awaited<B>) => C,
+	fn3: (c: Awaited<C>) => D,
+	fn4: (d: Awaited<D>) => E,
+	fn5: (e: Awaited<E>) => F,
+	fn6: (f: Awaited<F>) => G,
+	fn7: (g: Awaited<G>) => H,
+	fn8: (h: Awaited<H>) => I,
+): (...args: A) => Promise<Awaited<I>>;
 
 // 9 functions
 export function pipeAsync<A extends unknown[], B, C, D, E, F, G, H, I, J>(
-	fn1: (...args: A) => B | Promise<B>,
-	fn2: (b: B) => C | Promise<C>,
-	fn3: (c: C) => D | Promise<D>,
-	fn4: (d: D) => E | Promise<E>,
-	fn5: (e: E) => F | Promise<F>,
-	fn6: (f: F) => G | Promise<G>,
-	fn7: (g: G) => H | Promise<H>,
-	fn8: (h: H) => I | Promise<I>,
-	fn9: (i: I) => J | Promise<J>,
-): (...args: A) => Promise<J>;
+	fn1: (...args: A) => B,
+	fn2: (b: Awaited<B>) => C,
+	fn3: (c: Awaited<C>) => D,
+	fn4: (d: Awaited<D>) => E,
+	fn5: (e: Awaited<E>) => F,
+	fn6: (f: Awaited<F>) => G,
+	fn7: (g: Awaited<G>) => H,
+	fn8: (h: Awaited<H>) => I,
+	fn9: (i: Awaited<I>) => J,
+): (...args: A) => Promise<Awaited<J>>;
 
 // 10 functions
 export function pipeAsync<A extends unknown[], B, C, D, E, F, G, H, I, J, K>(
-	fn1: (...args: A) => B | Promise<B>,
-	fn2: (b: B) => C | Promise<C>,
-	fn3: (c: C) => D | Promise<D>,
-	fn4: (d: D) => E | Promise<E>,
-	fn5: (e: E) => F | Promise<F>,
-	fn6: (f: F) => G | Promise<G>,
-	fn7: (g: G) => H | Promise<H>,
-	fn8: (h: H) => I | Promise<I>,
-	fn9: (i: I) => J | Promise<J>,
-	fn10: (j: J) => K | Promise<K>,
-): (...args: A) => Promise<K>;
+	fn1: (...args: A) => B,
+	fn2: (b: Awaited<B>) => C,
+	fn3: (c: Awaited<C>) => D,
+	fn4: (d: Awaited<D>) => E,
+	fn5: (e: Awaited<E>) => F,
+	fn6: (f: Awaited<F>) => G,
+	fn7: (g: Awaited<G>) => H,
+	fn8: (h: Awaited<H>) => I,
+	fn9: (i: Awaited<I>) => J,
+	fn10: (j: Awaited<J>) => K,
+): (...args: A) => Promise<Awaited<K>>;
 
 /**
  * Composes async functions left-to-right into a single async function. Data
