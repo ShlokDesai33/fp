@@ -37,7 +37,7 @@ export function curry<A, B, R>(
  */
 export function curry(fn: (...args: unknown[]) => unknown) {
 	// binary function
-	return function $curry(a: unknown, b: unknown) {
+	return function $curry(a: unknown, b?: unknown) {
 		return arguments.length === 1
 			? // partial application
 				function $$curry(b: unknown) {
