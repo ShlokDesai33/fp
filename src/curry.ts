@@ -19,7 +19,7 @@ export function curry<A, B, R>(
  * partial application (e.g., `f(a)(b)`), and direct calls (e.g., `f(a, b)`).
  * Nullary and unary functions are not supported.
  *
- * @param f the function to be curried
+ * @param fn the function to be curried
  *
  * @returns A curried function supporting `f(a, b)` or `f(a)(b)`.
  *
@@ -35,15 +35,15 @@ export function curry<A, B, R>(
  * - All parameters must be required for proper currying behavior
  * - Function.length must accurately reflect the parameter count
  */
-export function curry(f: (...args: unknown[]) => unknown) {
+export function curry(fn: (...args: unknown[]) => unknown) {
 	// binary function
 	return function $curry(a: unknown, b: unknown) {
 		return arguments.length === 1
 			? // partial application
 				function $$curry(b: unknown) {
-					return f(a, b);
+					return fn(a, b);
 				}
 			: // direct invocation
-				f(a, b);
+				fn(a, b);
 	};
 }

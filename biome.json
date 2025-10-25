@@ -18,7 +18,7 @@
 			"recommended": true,
 			"correctness": {
 				"noUnusedVariables": {
-					"level": "warn",
+					"level": "info",
 					"fix": "none"
 				}
 			}
