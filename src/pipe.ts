@@ -62,7 +62,7 @@ export function pipe<A, B, C, D, E, F, G>(
  * passing through all functions.
  *
  * @example
- * // all async functions & starting with a promise
+ * // starting with a promise
  * const result = await pipe(
  *   fetch(`/api/users/${id}`)
  *   (response) => response.json(),
@@ -70,7 +70,7 @@ export function pipe<A, B, C, D, E, F, G>(
  * );
  *
  * @example
- * // mix of sync and async functions
+ * // mix of sync and async
  * const result = await pipe(
  *   456,
  *   (id: number) => ({ id, name: "Alice" }),
