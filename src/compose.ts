@@ -130,7 +130,7 @@ export function composeSync<A extends unknown[], B, C, D, E, F, G>(
 
 /**
  * Composes synchronous functions right-to-left (down-to-up) into a single
- * reusable function. The last function executes first: `composeSync(f, g, h)(x)`
+ * reusable function. The last function executes first:`composeSync(f, g, h)(x)`
  * equals `f(g(h(x)))`.
  *
  * The last function can accept multiple arguments; other functions must be

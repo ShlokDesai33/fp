@@ -24,7 +24,6 @@ export function curry<A, B, R>(
  * @returns A curried function supporting `f(a, b)` or `f(a)(b)`.
  *
  * @example
- * // binary function
  * const sum = (a: number, b: number) => a + b;
  * const curriedSum = curry(sum);
  * curriedSum(5)(10); // 15
